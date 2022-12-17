@@ -46,6 +46,10 @@ class PinnedRvAdapter(private var data: ArrayList<NoteEntity> , private var list
                 listener.onItemClickListener(noteEntity)
             }
 
+            binding.imageFilterButton.setOnClickListener{
+                listener.onMenuItemClickListener(it , noteEntity)
+            }
+
             binding.executePendingBindings()
         }
 

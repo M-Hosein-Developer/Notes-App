@@ -21,23 +21,23 @@ class MainActivity : AppCompatActivity() {
 
         binding = DataBindingUtil.setContentView(this , R.layout.activity_main)
 
-        setupNavigationComponent()
+//        setupNavigationComponent()
     }
 
-    private fun setupNavigationComponent() {
-        val navHostFragment:NavHostFragment = supportFragmentManager.findFragmentById(R.id.nav_host_fragment) as NavHostFragment
-        val navController = navHostFragment.navController
-
-
-        val appBarConfiguration = AppBarConfiguration(setOf(R.id.homeFragment , R.id.singleNoteFragment) , binding.drawerLayout)
-
-        binding.navView.setupWithNavController(navController)
-
-
-        val popupMenu = android.widget.PopupMenu(this , null)
-        popupMenu.inflate(R.menu.menu_bottom)
-        val menu = popupMenu.menu
-        binding.bottomBar.setupWithNavController(menu , navController)
-
-    }
+//    private fun setupNavigationComponent() {
+//        val navHostFragment:NavHostFragment = supportFragmentManager.findFragmentById(R.id.nav_host_fragment) as NavHostFragment
+//        val navController = navHostFragment.navController
+//
+//
+//        val appBarConfiguration = AppBarConfiguration(setOf(R.id.homeFragment , R.id.singleNoteFragment) , binding.drawerLayout)
+//
+//        binding.navView.setupWithNavController(navController)
+//
+//
+//        val popupMenu = android.widget.PopupMenu(this , null)
+//        popupMenu.inflate(R.menu.menu_bottom)
+//        val menu = popupMenu.menu
+//        binding.bottomBar.setupWithNavController(menu , navController)
+//
+//    }
 }

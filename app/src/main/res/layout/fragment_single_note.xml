@@ -45,6 +45,7 @@
 
             <include
                 android:id="@+id/include"
+                android:background="@color/Color"
                 layout="@layout/singlenote_appbar"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"

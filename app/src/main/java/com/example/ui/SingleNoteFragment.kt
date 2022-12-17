@@ -51,6 +51,16 @@ class SingleNoteFragment : Fragment() {
         return binding.root
     }
 
+    override fun onPrepareOptionsMenu(menu: Menu) {
+        super.onPrepareOptionsMenu(menu)
+        val item = menu.findItem(R.id.pinitem)
+        if (pinned){
+            item.icon = ContextCompat.getDrawable(requireActivity() , R.drawable.ic_baseline_push_pin_24)
+        }else{
+            item.icon = ContextCompat.getDrawable(requireActivity() , R.drawable.ic_outline_push_pin_24)
+        }
+    }
+
     private fun getData() {
 
         if (arguments != null){
@@ -134,29 +144,54 @@ class SingleNoteFragment : Fragment() {
 
     fun onAddNoteClick(view: View) {
 
-        binding.apply {
-            if (this.titleEdtx.text.isNullOrBlank()) {
-                Snackbar.make(this.mainCoord, "please Enter Your Title", Snackbar.LENGTH_SHORT)
-                    .show()
-            } else {
-                if (this.noteEdtx.text.isNullOrBlank()) {
-                    Snackbar.make(this.mainCoord, "please Enter Your Note", Snackbar.LENGTH_SHORT)
+        if (isUpdating){
+            binding.apply {
+                if (this.titleEdtx.text.isNullOrBlank()) {
+                    Snackbar.make(this.mainCoord, "please Enter Your Title", Snackbar.LENGTH_SHORT)
                         .show()
                 } else {
-                    val title = this.titleEdtx.text.toString()
-                    val note = this.noteEdtx.text.toString()
-                    val color = savedColor
+                    if (this.noteEdtx.text.isNullOrBlank()) {
+                        Snackbar.make(this.mainCoord, "please Enter Your Note", Snackbar.LENGTH_SHORT)
+                            .show()
+                    } else {
 
-                    val notesModel = NotesModel(title , note , color , false)
-                    viewModel.insetNoteToDatabase(notesModel)
+                        noteEntity.NoteModel.title = this.titleEdtx.text.toString()
+                        noteEntity.NoteModel.note = this.noteEdtx.text.toString()
+                        noteEntity.NoteModel.color = savedColor
+                        noteEntity.NoteModel.pinned = pinned
 
+                        viewModel.UpdateNoteDatabaset(noteEntity)
 
-
-                    Navigation.findNavController(view).navigate(R.id.action_singleNoteFragment_to_homeFragment)
+                        Navigation.findNavController(view).navigate(R.id.action_singleNoteFragment_to_homeFragment)
+                    }
                 }
             }
-        }
 
+        }else{
+            binding.apply {
+                if (this.titleEdtx.text.isNullOrBlank()) {
+                    Snackbar.make(this.mainCoord, "please Enter Your Title", Snackbar.LENGTH_SHORT)
+                        .show()
+                } else {
+                    if (this.noteEdtx.text.isNullOrBlank()) {
+                        Snackbar.make(this.mainCoord, "please Enter Your Note", Snackbar.LENGTH_SHORT)
+                            .show()
+                    } else {
+                        val title = this.titleEdtx.text.toString()
+                        val note = this.noteEdtx.text.toString()
+                        val color = savedColor
+
+                        val notesModel = NotesModel(title , note , color , false)
+                        viewModel.insetNoteToDatabase(notesModel)
+
+
+
+                        Navigation.findNavController(view).navigate(R.id.action_singleNoteFragment_to_homeFragment)
+                    }
+                }
+            }
+
+        }
     }
 
     fun onColorViewClick(check: View) {

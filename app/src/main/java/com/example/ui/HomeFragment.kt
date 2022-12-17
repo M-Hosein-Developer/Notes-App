@@ -5,6 +5,7 @@ import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.PopupMenu
 import androidx.core.os.bundleOf
 import androidx.databinding.DataBindingUtil
 import androidx.fragment.app.Fragment
@@ -30,9 +31,7 @@ class HomeFragment : Fragment() , CardClickListener{
 
     private lateinit var binding: FragmentHomeBinding
 
-    override fun onCreateView(
-        inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?
-    ): View? {
+    override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
 
         binding = DataBindingUtil.inflate(inflater, R.layout.fragment_home, container, false)
 
@@ -103,6 +102,28 @@ class HomeFragment : Fragment() , CardClickListener{
         Navigation.findNavController(binding.root).navigate(R.id.action_homeFragment_to_singleNoteFragment , bundle)
 
 
+    }
+
+    override fun onMenuItemClickListener(imageFilterButton: View, noteEntity: NoteEntity) {
+        val popupMenu = PopupMenu(requireActivity() , imageFilterButton)
+
+        popupMenu.setOnMenuItemClickListener {
+            when(it.itemId){
+                R.id.dlt -> {
+                    deleteNoteFromDb(noteEntity)
+                    true
+                }
+                else -> {
+                    return@setOnMenuItemClickListener false
+                }
+            }
+        }
+        popupMenu.inflate(R.menu.action)
+        popupMenu.show()
+    }
+
+    private fun deleteNoteFromDb(noteEntity: NoteEntity) {
+        viewModel.deleteNote(noteEntity)
     }
 
 }
